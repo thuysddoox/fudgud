@@ -1,0 +1,32 @@
+env.DEPLOYMENT_SERVER = '54.79.97.60'
+env.DEPLOYMENT_USER = 'fruitful'
+env.DEPLOYMENT_PATH = '/home/fruitful/bluebottlevn/deploy/beta'
+env.DEPLOYMENT_APP_PATH = '/var/www/bluebottle-frontend-beta'
+
+def preBuild(script) {
+}
+
+def build(script) {
+  sh """
+    cd ${env.WORKSPACE}
+    rm -rf bluebottledigital
+    
+    npm install
+    npm run build-prod
+
+    mv out bluebottledigital
+    tar -czf bluebottledigital.tar.gz bluebottledigital
+  """
+}
+
+def postBuild(script) {
+  sh """
+    scp -rp ${env.WORKSPACE}/bluebottledigital.tar.gz ${env.DEPLOYMENT_USER}@${env.DEPLOYMENT_SERVER}:${env.DEPLOYMENT_PATH}/
+    ssh ${env.DEPLOYMENT_USER}@${env.DEPLOYMENT_SERVER} /bin/bash <<'ENDSSH'
+        tar -xzf ${env.DEPLOYMENT_PATH}/bluebottledigital.tar.gz -C ${env.DEPLOYMENT_PATH}
+        rm -rf ${env.DEPLOYMENT_APP_PATH}/*
+        cp -rf  ${env.DEPLOYMENT_PATH}/bluebottledigital/* ${env.DEPLOYMENT_APP_PATH}
+  """ 
+}
+
+return this;
