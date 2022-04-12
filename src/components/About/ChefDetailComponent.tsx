@@ -41,7 +41,7 @@ const ChefDetailComponent = ({ chef }: { chef: any }) => {
   const router = useRouter();
   const ImgBaseUrl = `${router.basePath}/assets/images/chefs`;
   return (
-    <ChefDetailWrapper className="border border-yellow p-4 sm:p-8 lg:p-12 rounded-lg">
+    <ChefDetailWrapper className="border border-yellow rounded-lg">
       <div className="flex flex-col sm:flex-row justify-between mb-6">
         <img
           src={`${ImgBaseUrl}/${chef.thumnailUrl}`}

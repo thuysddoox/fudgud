@@ -78,17 +78,43 @@ const HomeBannerWrapper = styled.div`
     }
   }
 `;
+const PrevArrow = (props: any) => {
+  const { className, style, onClick } = props;
+  return (
+    <FontAwesomeIcon
+      icon={faLongArrowAltLeft}
+      size="sm"
+      className={className}
+      style={style}
+      onClick={onClick}
+    />
+  );
+};
+const NextArrow = (props: any) => {
+  const { className, style, onClick } = props;
+  return (
+    <FontAwesomeIcon
+      icon={faLongArrowAltRight}
+      size="sm"
+      className={className}
+      style={style}
+      onClick={onClick}
+    />
+  );
+};
 const settings = {
   dots: true,
   infinite: true,
   speed: 500,
+  autoplaySpeed: 6000,
   slidesToShow: 1,
   slidesToScroll: 1,
-  autoplay: false,
+  autoplay: true,
   arrow: true,
-  nextArrow: <FontAwesomeIcon icon={faLongArrowAltRight} size="sm" />,
-  prevArrow: <FontAwesomeIcon icon={faLongArrowAltLeft} size="sm" />,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
 };
+
 const BannerList = [
   {
     mainSlogant:

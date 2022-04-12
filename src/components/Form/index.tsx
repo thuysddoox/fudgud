@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import styled from 'styled-components';
 import useForm from './useForm';
 import validate from './validateRules';
 
-const FormWrapper = styled.div`
-  .btn-submit:hover,
+export const FormWrapper = styled.div`
+  .btn-submit.cursor-pointer:hover,
   .btn-active {
     background: var(--color-green) !important;
     color: #ffff !important;
@@ -46,7 +47,8 @@ const FormWrapper = styled.div`
     text-overflow: ellipsis;
   }
 `;
-const Form = () => {
+const Form = ({ hasFile }: { hasFile?: boolean }) => {
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   function sendData(data: any) {
     let formData = new FormData();
     formData = { ...data };
@@ -59,6 +61,9 @@ const Form = () => {
 
   return (
     <FormWrapper>
+      <h3 className="text-center font-semibold text-xl text-red mt-3 mb-10 mx-5">
+        Send Us A Message
+      </h3>
       <form className="mb-w-full w-11/12 sm:w-4/5 mx-auto">
         <div className="m-6">
           <input
@@ -123,14 +128,42 @@ const Form = () => {
             <p className="text-sm pt-2 text-red">{errors.message}</p>
           )}
         </div>
-        <div className="m-6 flex justify-center items-center">
-          <input
-            type="submit"
-            name="send"
-            value="Send"
-            className="px-7 py-2 rounded-3xl text-yellow font-medium cursor-pointer btn-submit transition-all"
-            onClick={handleSubmit}
+        <div className="m-6 flex justify-between items-center flex-wrap">
+          {hasFile && (
+            <>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                value=""
+                onChange={handleChange}
+                className="px-7 py-2 rounded-3xl text-yellow font-medium cursor-pointer btn-submit transition-all hidden"
+              />
+              <label
+                htmlFor="file"
+                className="px-7 py-2 text-yellow font-medium cursor-pointer bg-white rounded-3xl border border-yellow"
+              >
+                Attach your CV
+              </label>
+            </>
+          )}
+          <ReCAPTCHA
+            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+            hl={'en'}
+            onChange={() => setIsDisabled(!isDisabled)}
           />
+          <div className="m-6 flex justify-center items-center w-full">
+            <input
+              type="submit"
+              name="send"
+              value="Send"
+              className={`px-7 py-2 rounded-3xl text-yellow font-medium btn-submit transition-all ${
+                isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+              }`}
+              onClick={handleSubmit}
+              disabled={isDisabled}
+            />
+          </div>
         </div>
       </form>
     </FormWrapper>

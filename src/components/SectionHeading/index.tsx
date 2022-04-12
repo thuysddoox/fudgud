@@ -30,9 +30,9 @@ const SectionHeadingWrap = styled.div`
 const SectionHeading = ({ title, note }: { title: string; note?: string }) => {
   return (
     <SectionHeadingWrap>
-      <div className="flex items-center justify-between my-14">
+      <div className="flex items-center justify-between my-10 md:my-12 lg:my-14">
         <span className="line block w-8 sm:w-1/5 md:w-1/4 lg:w-1/3 bg-white relative"></span>
-        <div>
+        <div className="px-4">
           <h3 className="font-semibold uppercase text-xl sm:text-2xl lg:text-3xl text-yellow relative text-center">
             {title}
           </h3>

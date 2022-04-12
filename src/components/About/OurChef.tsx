@@ -163,11 +163,11 @@ const OurChefWrapper = styled.div`
   }
   .slick-prev {
     left: -40px;
-    z-index: 2;
+    z-index: 1;
   }
   .slick-next {
     right: -40px;
-    z-index: 2;
+    z-index: 1;
   }
   .slick-disabled {
     path {
@@ -177,10 +177,10 @@ const OurChefWrapper = styled.div`
   }
   @media screen and (max-width: 992px) {
     .slick-prev {
-      left: -30px;
+      left: -10px;
     }
     .slick-next {
-      right: -30px;
+      right: -10px;
     }
   }
   @media screen and (max-width: 680px) {
@@ -298,17 +298,23 @@ const ChefComponent = ({ chef }: { chef: Chef }) => {
   );
 };
 
-const OurChef = () => {
+const OurChef = ({ title, note }: { title?: string; note?: string }) => {
   const [isShowDetail, setIsShowDetail] = useState<boolean>(false);
   const [chefCurrent, setChefCurrent] = useState<Chef>();
   function showChefDetail(chefDetail: Chef) {
     setIsShowDetail(true);
     setChefCurrent(chefDetail);
   }
+  function handleClose() {
+    setIsShowDetail(false);
+  }
   return (
-    <OurChefWrapper>
-      <SectionHeading title="Who Cook for you" note="Our Professional Chefs" />
-      <div className="sm:w-11/12 md:w-4/5 mx-auto px-3 sm:px-4">
+    <OurChefWrapper className="pb-16">
+      <SectionHeading
+        title={`${title || 'Who Cook for you'}`}
+        note={` ${note || 'Our Professional Chefs'}`}
+      />
+      <div className="md:w-11/12 xl:w-4/5 mx-auto px-5">
         <Slider {...settings}>
           {[...Chefs, ...Chefs].map((chef, id) => {
             return (
@@ -320,7 +326,7 @@ const OurChef = () => {
         </Slider>
       </div>
       {isShowDetail && (
-        <Modal handleOpen={setIsShowDetail} isOpen={isShowDetail}>
+        <Modal handleOpen={handleClose} isOpen={isShowDetail} hasWrapper={true}>
           <ChefDetailComponent chef={chefCurrent} />
         </Modal>
       )}

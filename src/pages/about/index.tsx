@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Achievement from '../../components/About/Achievement';
 import ContactInformation from '../../components/About/ContactInformation';
+import DownloadApp from '../../components/About/DownloadApp';
 import OurChef from '../../components/About/OurChef';
 import OurStory from '../../components/About/OurStory';
 import Services from '../../components/About/Services';
@@ -43,7 +44,7 @@ const AboutPage = () => {
         />
       }
     >
-      <AboutPageWrapper className="pt-48 pb-20">
+      <AboutPageWrapper className="pt-24 sm:pt-28 md:pt-36 pb-20">
         <ContactInformation />
         <div className="relative flex mb-block">
           <div className="mb-w-full w-1/2">
@@ -78,6 +79,7 @@ const AboutPage = () => {
         </div>
         <Achievement />
         <OurChef />
+        <DownloadApp />
       </AboutPageWrapper>
     </Main>
   );

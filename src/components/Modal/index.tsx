@@ -32,10 +32,12 @@ const Modal = ({
   children,
   isOpen,
   handleOpen,
+  hasWrapper,
 }: {
   children: ReactNode;
   isOpen?: boolean;
   handleOpen: Function;
+  hasWrapper?: boolean;
 }) => {
   useEffect(() => {
     if (isOpen) {
@@ -46,7 +48,7 @@ const Modal = ({
   function handleClose() {
     window.document.body.style.overflowY = 'scroll';
     window.document.body.style.height = 'auto';
-    handleOpen(false);
+    handleOpen();
   }
   return (
     <ModalWrapper className={`fixed inset-0`}>
@@ -57,9 +59,13 @@ const Modal = ({
           className="h-7 cursor-pointer absolute top-8 right-2 sm:right-14"
           onClick={handleClose}
         />
-        <div className="w-11/12 sm:w-4/5 h-4/5 bg-yellow m-auto content pb-8 rounded-lg ">
-          {children}
-        </div>
+        {!hasWrapper ? (
+          children
+        ) : (
+          <div className="w-11/12 sm:w-4/5 h-4/5 bg-yellow m-auto content p-4 sm:p-8 lg:p-12 rounded-lg relative modal">
+            {children}
+          </div>
+        )}
       </div>
     </ModalWrapper>
   );
