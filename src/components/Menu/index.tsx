@@ -20,7 +20,7 @@ const Menu = ({ dishes }: { dishes: Array<Dish> }) => {
       <ul className="flex flex-wrap justify-between m-2">
         {dishes.map((dish, id) => {
           return (
-            <Link href="" as="" key={id}>
+            <Link href={`${router.pathname}/slug`} as="" key={id}>
               <div className="flex justify-center md:justify-start items-center w-full md:w-1/2 my-4 sm:px-4 cursor-pointer">
                 <img
                   src={`${ImgBaseUrl}/${dish.thumnailUrl}`}
